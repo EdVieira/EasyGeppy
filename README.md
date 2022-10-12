@@ -10,6 +10,32 @@ Nonetheless, EasyGeppy allows you to set your custom configuration to its setup 
 
 Feel free to contribute.
 
+## How to use
+~~~
+
+#import
+from src.easy_geppy import EasyGeppy
+
+# Initialize
+egp = EasyGeppy(df, #Pandas DataFrame
+                 x_columns=['column1','column2','column3'],
+                 y_column='column_y')
+
+egp.default_initialization()
+
+# Train
+egp.launch_evolution(n_pop=300, n_gen=100)
+
+# See resulting function
+egp.get_best_solution_simplified()
+
+# Get resulting function
+best_func = egp.get_best_solution_as_function()
+
+# Make predictions
+df['y_predicted'] = best_func(df)
+
+~~~
 ## Example
 1. [EasyGeppy-Example](./EasyGeppy-Example.ipynb)
 

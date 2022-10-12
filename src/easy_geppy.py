@@ -43,18 +43,14 @@ Currently, it is defined as::
 """
 
 def add(x,y):
-	__name__ = 'add'
 	return np.add(x,y)
 def sub(x,y):
-	__name__ = 'sub'
 	return np.subtract(x,y)
 def mul(x,y):
-	__name__ = 'mul'
 	return np.multiply(x,y)
 
 # Avoid error while dividing by zero
 def protected_div(x1, x2):
-	__name__ = 'protected_div'
 	res = np.divide(x1,x2)
 	try:
 		res[np.isinf(res)] = 1
@@ -159,16 +155,25 @@ class EasyGeppy:
 		self.toolbox.register('compile', gep.compile_, pset=self.pset)
 		return self.toolbox
 
+	def individual_solver(self, individual, df):
+		func = self.toolbox.compile(individual)
+		args_n = []
+		for col in self.x_columns:
+			args_n.append('pd.Series('+str(df[col].to_list())+')')
+		args = ', '.join(args_n)
+		code = 'func({})'.format(args)
+		results = eval(code)
+		return results
+	
+	def get_individual_solver_as_func(self, individual):
+		def solver(df):
+			return self.individual_solver(individual, df)
+		return solver
+
 	def get_evaluator(self):
 		def evaluate_(individual):
 			"""Evalute the fitness of an individual: MAPE (mean absolute percent error)"""
-			func = self.toolbox.compile(individual)
-			args_n = []
-			for col in self.x_columns:
-				args_n.append('pd.Series('+str(self.data[col].to_list())+')')
-			args = ', '.join(args_n)
-			code = 'func({})'.format(args)
-			results = eval(code)
+			results = self.individual_solver(individual, self.data)
 			#print(results)
 			try:
 				Yp = results
@@ -222,7 +227,7 @@ class EasyGeppy:
 		return gep.simplify(self.best_individual)
 
 	def get_best_solution_as_function(self):
-		return self.toolbox.compile(self.best_individual)
+		return self.get_individual_solver_as_func(self.best_individual)
 	
 	def clean_logs(self):
 		del self.logs
