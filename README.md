@@ -42,7 +42,7 @@ egp.get_best_solution_simplified()
 
 ~~~
 ## Example
-1. [EasyGeppy-Example](./EasyGeppy-Example.ipynb)
+1. [EasyGeppy-Example](./tests/EasyGeppy-Example.ipynb)
 
 ## Reference
 [1] Shuhua Gao (2020) Geppy [Source code]. https://github.com/ShuhuaGao/geppy.
