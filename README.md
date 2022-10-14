@@ -10,11 +10,16 @@ Nonetheless, EasyGeppy allows you to set your custom configuration to its setup 
 
 Feel free to contribute.
 
+## How to install
+~~~
+pip install easy_geppy
+~~~
+
 ## How to use
 ~~~
 
 #import
-from src.easy_geppy import EasyGeppy
+from easy_geppy import EasyGeppy
 
 # Initialize
 egp = EasyGeppy(df, #Pandas DataFrame
@@ -26,14 +31,14 @@ egp.default_initialization()
 # Train
 egp.launch_evolution(n_pop=300, n_gen=100)
 
-# See resulting function
-egp.get_best_solution_simplified()
-
-# Get resulting function
+# Get resulting function for making predictions
 best_func = egp.get_best_solution_as_function()
 
 # Make predictions
 df['y_predicted'] = best_func(df)
+
+# Get symbolic representation of the resulting function
+egp.get_best_solution_simplified()
 
 ~~~
 ## Example
