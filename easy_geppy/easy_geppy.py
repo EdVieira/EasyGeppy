@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
-"""
+'''
 .. moduleauthor:: Eduardo Henrique Vieira dos Santos
 This :mod:`easy_geppy` module provides a minimized and pre-defined workflow setup 
 for using Geppy along with Pandas and Numpy to solve regression problems.
@@ -8,7 +8,7 @@ Nonetheless, it allows you to set your custom configuration to this setup.
 Its content is base on the following implementation:
 Based on https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-ENC.ipynb
 
-"""
+'''
 
 import geppy as gep
 from deap import creator, base, tools
@@ -19,7 +19,7 @@ import pandas as pd
 
 import dill
 
-"""
+'''
 note:
 Currently, it is defined as::
     DEFAULT_SYMBOLIC_FUNCTION_MAP = {
@@ -40,7 +40,7 @@ Currently, it is defined as::
         math.cos.__name__: sp.cos,
         math.tan.__name__: sp.tan
     }
-"""
+'''
 
 def add(x,y):
 	return np.add(x,y)
@@ -119,10 +119,10 @@ class EasyGeppy:
 			del creator_.Individual
 		except:
 			pass
-		creator_.create("FitnessMin",
+		creator_.create('FitnessMin',
 						base.Fitness,
 						weights=(-1,))  # to minimize the objective (fitness)
-		creator_.create("Individual",
+		creator_.create('Individual',
 						gep.Chromosome,
 						fitness=creator_.FitnessMin)
 		return creator_
@@ -146,7 +146,7 @@ class EasyGeppy:
 							gene_gen=self.toolbox.gene_gen,
 							n_genes=n_genes,linker=operator.add)
 
-		self.toolbox.register("population",
+		self.toolbox.register('population',
 							self.tools.initRepeat,
 							list,
 							self.toolbox.individual)
@@ -172,7 +172,7 @@ class EasyGeppy:
 
 	def get_evaluator(self):
 		def evaluate_(individual):
-			"""Evalute the fitness of an individual: MAPE (mean absolute percent error)"""
+			'''Evalute the fitness of an individual: MAPE (mean absolute percent error)'''
 			results = self.individual_solver(individual, self.data)
 			#print(results)
 			try:
@@ -203,11 +203,11 @@ class EasyGeppy:
 	
 	def get_generation_statistics(self):
 		stats = self.tools.Statistics(key=lambda ind: ind.fitness.values[0])
-		stats.register("size", len)
-		stats.register("avg", np.mean)
-		stats.register("std", np.std)
-		stats.register("min", np.min)
-		stats.register("max", np.max)
+		stats.register('size', len)
+		stats.register('avg', np.mean)
+		stats.register('std', np.std)
+		stats.register('min', np.min)
+		stats.register('max', np.max)
 		return stats
 	
 	def launch_evolution(self, n_pop=100, n_gen=300):
