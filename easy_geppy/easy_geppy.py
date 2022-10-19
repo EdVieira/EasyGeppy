@@ -59,12 +59,20 @@ def protected_div(x1, x2):
 		return np.divide(x1,x2)
 	return res
 
+def get_default_metric():
+	def SSE(Y_actual,Y_Predicted):
+		sse = np.sum((Y_actual - Y_Predicted)**2)
+		return sse
+	return SSE
+
 class EasyGeppy:
 	def __init__(self, data, x_columns, y_column, random_seed=0):
 		random.seed(random_seed)
 		np.random.seed(random_seed)
 
 		self.data = data.copy()
+
+		self.metric = get_default_metric()
 
 		self.x_columns = x_columns
 		self.y_column = y_column
@@ -101,10 +109,6 @@ class EasyGeppy:
 	
 	def define_operators(self):
 		pset = gep.PrimitiveSet('Main', input_names=self.x_columns)
-		#pset.add_function(operator.add, 2)
-		#pset.add_function(operator.sub, 2)
-		#pset.add_function(operator.mul, 2)
-		#pset.add_function(protected_div, 2)
 		pset.add_function(add, 2)
 		pset.add_function(sub, 2)
 		pset.add_function(mul, 2)
@@ -172,17 +176,19 @@ class EasyGeppy:
 
 	def get_evaluator(self):
 		def evaluate_(individual):
-			'''Evalute the fitness of an individual: MAPE (mean absolute percent error)'''
+			'''Evalute the fitness of an individual: through the metric'''
 			results = self.individual_solver(individual, self.data)
+			Y = self.data[self.y_column].values 
 			#print(results)
 			try:
 				Yp = results
 			except:
 				Yp = np.array(results)
-			minimum = np.min(self.data[self.y_column].values)
-			maximum = np.max(self.data[self.y_column].values)
-			amplitude = maximum-minimum
-			return np.mean(np.abs(self.data[self.y_column].values - Yp))/amplitude,
+			#minimum = np.min(self.data[self.y_column].values)
+			#maximum = np.max(self.data[self.y_column].values)
+			#amplitude = maximum-minimum
+			#return np.mean(np.abs(self.data[self.y_column].values - Yp))/amplitude,
+			return self.metric(Y,Yp),
 		
 		return evaluate_
 
@@ -203,7 +209,6 @@ class EasyGeppy:
 	
 	def get_generation_statistics(self):
 		stats = self.tools.Statistics(key=lambda ind: ind.fitness.values[0])
-		stats.register('size', len)
 		stats.register('avg', np.mean)
 		stats.register('std', np.std)
 		stats.register('min', np.min)

@@ -1,6 +1,6 @@
 # EasyGeppy
 
-EasyGeppy is an easy to use programming interface for [Geppy](https://github.com/ShuhuaGao/geppy), implemented by Shuhua Gao [1], and proposed by C. Ferreira  in 2001 [2] for [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP). 
+EasyGeppy is an easy to use programming interface for [Geppy](https://github.com/ShuhuaGao/geppy) from Shuhua Gao [1], and proposed by C. Ferreira  in 2001 [2] for [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP). 
 
 EasyGeppy provides a minimized and pre-defined pipeline setup for solving simple and multiple regression problems using Geppy along with Pandas [3] and Numpy [4].
 

@@ -1,0 +1,35 @@
+graph {
+	1 [label="/"]
+	2 [label="*"]
+	3 [label="+"]
+	4 [label="/"]
+	5 [label="+"]
+	6 [label=AveRooms]
+	7 [label="+"]
+	8 [label=HouseAge]
+	9 [label=AveRooms]
+	10 [label=AveBedrms]
+	11 [label=MedInc]
+	12 [label=HouseAge]
+	13 [label=MedInc]
+	14 [label="/"]
+	15 [label=MedInc]
+	16 [label=AveOccup]
+	0 [label="+"]
+	1 -- 2
+	1 -- 3
+	2 -- 4
+	2 -- 5
+	3 -- 6
+	3 -- 7
+	4 -- 8
+	4 -- 9
+	5 -- 10
+	5 -- 11
+	7 -- 12
+	7 -- 13
+	14 -- 15
+	14 -- 16
+	0 -- 1
+	0 -- 14
+}

@@ -6,7 +6,7 @@ def read(file_name):
 
 setup(
 	name='easy_geppy',
-	version='0.1.1',
+	version='0.1.2',
 	description='EasyGeppy is an easy to use programming interface for Geppy',
 	long_description=read('README.md'),
 	long_description_content_type='text/markdown',
