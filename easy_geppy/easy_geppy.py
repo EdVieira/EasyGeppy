@@ -179,15 +179,10 @@ class EasyGeppy:
 			'''Evalute the fitness of an individual: through the metric'''
 			results = self.individual_solver(individual, self.data)
 			Y = self.data[self.y_column].values 
-			#print(results)
 			try:
 				Yp = results
 			except:
 				Yp = np.array(results)
-			#minimum = np.min(self.data[self.y_column].values)
-			#maximum = np.max(self.data[self.y_column].values)
-			#amplitude = maximum-minimum
-			#return np.mean(np.abs(self.data[self.y_column].values - Yp))/amplitude,
 			return self.metric(Y,Yp),
 		
 		return evaluate_
